@@ -401,7 +401,7 @@
   <!-- Script de la page -->
   <script>
     // 🔧 CONFIGURATION SUPABASE - REMPLACEZ CES VALEURS
-    const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co;           // ⚠️ Remplacez par votre URL
+    const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co/";            // ⚠️ Remplacez par votre URL
     const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5Y2VyeGN6eW5lYmphdGRoeWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4ODI1NTAsImV4cCI6MjA3MjQ1ODU1MH0.KrEdzR5UnuRw2zj95hJDn4BfeiaYHS3O--ZcYOPQL58";      // ⚠️ Remplacez par votre clé anon
 
     let supabaseClient;
