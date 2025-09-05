@@ -2,332 +2,392 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rejoignez Notre Waitlist - PartyGo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>PartyGo - Join the Waitlist</title>
 
-  <!-- Styles (vos styles originaux + corrections) -->
+  <!-- Styles mobile-first optimisés -->
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent;
+    }
+    
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
       background: linear-gradient(135deg, #ff6b9d 0%, #ffa726 100%);
-      min-height: 100vh; 
+      min-height: 100vh;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
     .container { 
-      min-height:100vh; 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      padding:2rem; 
-      position:relative; 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      position: relative;
     }
+
     .background-pattern { 
-      position:absolute; 
-      inset:0;
-      background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
+      animation: float 25s ease-in-out infinite;
+      pointer-events: none;
     }
+    
     @keyframes float { 
-      0%,100%{transform:translateY(0) rotate(0)} 
-      50%{transform:translateY(-20px) rotate(1deg)} 
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
     }
+
     .card {
-      background: rgba(255,255,255,0.95); 
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(20px);
-      border-radius:24px; 
-      padding:3rem; 
-      max-width:500px; 
-      width:100%;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.2);
-      position:relative; 
-      z-index:1; 
-      animation: slideUp .8s ease-out;
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.12),
+        0 4px 16px rgba(0,0,0,0.06),
+        0 0 0 0.5px rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 10;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      margin: 1rem 0;
     }
+    
     @keyframes slideUp { 
-      from{opacity:0; transform:translateY(30px)} 
-      to{opacity:1; transform:translateY(0)} 
-    }
-    .logo{ 
-      width:100px; 
-      height:100px; 
-      background:white; 
-      border-radius:50%; 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      margin:0 auto 2rem; 
-      box-shadow:0 10px 30px rgba(255,107,157,.3); 
-      overflow:hidden; 
-    }
-    .logo svg{ width:80px; height:80px; }
-    h1{ 
-      font-size:2.5rem; 
-      font-weight:800; 
-      text-align:center; 
-      color:#1a1a1a; 
-      margin-bottom:1rem; 
-      line-height:1.2; 
-    }
-    .brand-name{ 
-      background:linear-gradient(135deg, #ff6b9d, #ffa726); 
-      -webkit-background-clip:text; 
-      -webkit-text-fill-color:transparent; 
-      background-clip:text; 
-      font-size:3rem; 
-      font-weight:900; 
-      margin-bottom:.5rem; 
-    }
-    h2{ 
-      font-size:1.5rem; 
-      font-weight:600; 
-      text-align:center; 
-      color:#333; 
-      margin-bottom:2rem; 
-    }
-    .subtitle{ 
-      font-size:1.1rem; 
-      color:#666; 
-      text-align:center; 
-      margin-bottom:2rem; 
-      line-height:1.6; 
+      from { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
     }
 
-    .form-container { margin-bottom:2rem; }
-    .input-group{ margin-bottom:1rem; }
-    input{
-      width:100%; 
-      padding:1rem 1.5rem; 
-      font-size:1rem; 
-      border:2px solid #e1e8ed; 
-      border-radius:12px; 
-      background:white; 
-      transition:all .3s ease; 
-      outline:none;
+    .logo { 
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 32px rgba(255,107,157,0.25);
+      overflow: hidden;
     }
-    input:focus{ 
-      border-color:#ff6b9d; 
-      box-shadow:0 0 0 4px rgba(255,107,157,.1); 
-      transform: translateY(-2px); 
-    }
-    input::placeholder{ color:#9ca3af; }
+    .logo svg { width: 60px; height: 60px; }
 
-    .submit-btn{
-      width:100%; 
-      padding:1rem 2rem; 
-      font-size:1.1rem; 
-      font-weight:600; 
-      color:white;
-      background: linear-gradient(135deg, #ff6b9d, #ffa726); 
-      border:none; 
-      border-radius:12px; 
-      cursor:pointer; 
-      transition: all .3s ease; 
-      margin-top:1rem; 
-      position:relative; 
-      overflow:hidden;
+    .brand-name { 
+      background: linear-gradient(135deg, #ff6b9d, #ffa726);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2.5rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
     }
-    .submit-btn:hover:not(:disabled){ 
-      transform: translateY(-2px); 
-      box-shadow:0 10px 25px rgba(255,107,157,.3); 
+
+    .tagline { 
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+      color: #2d3748;
+      margin-bottom: 1rem;
+      line-height: 1.3;
     }
-    .submit-btn:active:not(:disabled){ transform: translateY(0); }
+
+    .subtitle { 
+      font-size: 1rem;
+      color: #718096;
+      text-align: center;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .form-container { 
+      margin-bottom: 2rem; 
+    }
+
+    .input-group { 
+      margin-bottom: 1rem; 
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input:focus {
+      border-color: #ff6b9d;
+      box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+      transform: translateY(-1px);
+      background: white;
+    }
+
+    input::placeholder { 
+      color: #a0aec0;
+      font-weight: 400;
+    }
+
+    input.error {
+      border-color: #e53e3e;
+      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1.1rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #ff6b9d, #ffa726);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .submit-btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
     .submit-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
       transform: none;
     }
-    .submit-btn::before{
-      content:''; 
-      position:absolute; 
-      top:50%; 
-      left:50%; 
-      width:0; 
-      height:0; 
-      background:rgba(255,255,255,.2); 
-      border-radius:50%; 
-      transform:translate(-50%,-50%); 
-      transition:width .6s, height .6s;
-    }
-    .submit-btn:active:not(:disabled)::before{ width:300px; height:300px; }
 
-    /* Features (3 cartes côte à côte, bordure dégradée) */
-    .features{ 
-      display:grid; 
-      grid-template-columns:repeat(3, minmax(0, 1fr)); 
-      gap:14px; 
-      margin-top:2rem; 
-    }
-    .feature{
-      --pink:#ff6b9d; 
-      --orange:#ffa726;
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      gap:10px;
-      padding:14px 18px; 
-      border-radius:14px; 
-      font-weight:500; 
-      color:#333;
-      border:2px solid transparent;
-      background: linear-gradient(#fff,#fff) padding-box,
-                  linear-gradient(135deg, var(--pink), var(--orange)) border-box;
-      box-shadow:0 4px 14px rgba(0,0,0,.06);
-    }
-    .feature-icon{ 
-      width:22px; 
-      height:22px; 
-      color:var(--pink); 
-      flex-shrink:0; 
-    }
-    .feature-text{ 
-      font-size:1rem; 
-      color:#3a3a3a; 
-      font-weight:600; 
-      letter-spacing:.2px; 
-    }
-
-    .social-proof{ 
-      text-align:center; 
-      margin-top:2rem; 
-      padding-top:2rem; 
-      border-top:1px solid #e1e8ed; 
-    }
-    .counter{ 
-      font-size:2rem; 
-      font-weight:700; 
-      background:linear-gradient(135deg, #ff6b9d, #ffa726); 
-      -webkit-background-clip:text; 
-      -webkit-text-fill-color:transparent; 
-      background-clip:text; 
-      margin-bottom:.5rem; 
-    }
-    .counter-label{ 
-      font-size:.9rem; 
-      color:#666; 
-      text-transform:uppercase; 
-      letter-spacing:.5px; 
-    }
-    .success-message{ 
-      display:none; 
-      background:linear-gradient(135deg, #10b981, #059669); 
-      color:white; 
-      padding:1rem; 
-      border-radius:12px; 
-      text-align:center; 
-      font-weight:500; 
-      margin-top:1rem; 
-      animation: slideUp .5s ease-out;
-    }
-
-    /* Message d'erreur ajouté */
-    .error-message {
-      display:none; 
-      background:linear-gradient(135deg, #ef4444, #dc2626); 
-      color:white; 
-      padding:1rem; 
-      border-radius:12px; 
-      text-align:center; 
-      font-weight:500; 
-      margin-top:1rem; 
-      animation: slideUp .5s ease-out;
-    }
-
-    /* Indicateur de connexion */
-    .connection-status {
+    .submit-btn::before {
+      content: '';
       position: absolute;
-      top: 1rem;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .submit-btn:active:not(:disabled)::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 2rem 0;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 107, 157, 0.1);
+      font-weight: 500;
+      color: #2d3748;
+    }
+
+    .feature-icon {
+      width: 20px;
+      height: 20px;
+      color: #ff6b9d;
+      flex-shrink: 0;
+    }
+
+    .feature-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .social-proof {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .counter {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff6b9d, #ffa726);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .counter-label {
+      font-size: 0.85rem;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .message {
+      display: none;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 500;
+      margin-top: 1rem;
+      animation: slideUp 0.4s ease;
+    }
+
+    .success-message {
+      background: linear-gradient(135deg, #48bb78, #38a169);
+      color: white;
+    }
+
+    .error-message {
+      background: linear-gradient(135deg, #f56565, #e53e3e);
+      color: white;
+    }
+
+    .connection-status {
+      position: fixed;
+      top: env(safe-area-inset-top, 1rem);
       right: 1rem;
       padding: 0.5rem 1rem;
       border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      opacity: 0.9;
-      z-index: 10;
-    }
-    .connection-status.online {
-      background: rgba(16, 185, 129, 0.2);
-      color: #059669;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-    .connection-status.offline {
-      background: rgba(239, 68, 68, 0.2);
-      color: #dc2626;
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 20;
+      backdrop-filter: blur(10px);
     }
 
-    @media (max-width:768px){ 
-      .card{ padding:2rem; margin:1rem; } 
-      .brand-name{ font-size:2.5rem; } 
-      h2{ font-size:1.3rem; } 
-      .subtitle{ font-size:1rem; } 
-      .features{ grid-template-columns:1fr; gap:12px; }
-      .container { padding: 1rem; }
-      .connection-status {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-bottom: 1rem;
+    .connection-status.online {
+      background: rgba(72, 187, 120, 0.2);
+      color: #2f855a;
+      border: 1px solid rgba(72, 187, 120, 0.3);
+    }
+
+    .connection-status.offline {
+      background: rgba(245, 101, 101, 0.2);
+      color: #c53030;
+      border: 1px solid rgba(245, 101, 101, 0.3);
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive pour tablettes */
+    @media (min-width: 768px) {
+      .container {
+        padding: 2rem;
+      }
+      
+      .card {
+        padding: 3rem 2.5rem;
+        max-width: 480px;
+      }
+      
+      .brand-name {
+        font-size: 3rem;
+      }
+      
+      .tagline {
+        font-size: 1.4rem;
+      }
+      
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      
+      .feature {
+        flex-direction: column;
         text-align: center;
+        padding: 1.25rem 1rem;
+      }
+      
+      .connection-status {
+        top: 2rem;
+        right: 2rem;
       }
     }
-    
-    .floating-elements{ 
-      position:absolute; 
-      width:100%; 
-      height:100%; 
-      overflow:hidden; 
-      pointer-events:none; 
+
+    /* Desktop */
+    @media (min-width: 1024px) {
+      .card {
+        max-width: 520px;
+        padding: 3.5rem 3rem;
+      }
     }
-    .floating-element{ 
-      position:absolute; 
-      background:rgba(255,255,255,.1); 
-      border-radius:50%; 
-      animation:floatAround 15s infinite linear; 
+
+    /* Support pour les encoches iPhone */
+    @supports (padding: max(0px)) {
+      .container {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+      }
     }
-    .floating-element:nth-child(1){ 
-      width:60px; 
-      height:60px; 
-      top:20%; 
-      left:10%; 
-      animation-delay:-2s; 
-    }
-    .floating-element:nth-child(2){ 
-      width:40px; 
-      height:40px; 
-      top:60%; 
-      right:15%; 
-      animation-delay:-8s; 
-    }
-    .floating-element:nth-child(3){ 
-      width:80px; 
-      height:80px; 
-      bottom:20%; 
-      left:20%; 
-      animation-delay:-5s; 
-    }
-    @keyframes floatAround{ 
-      0%{transform:translateY(0) rotate(0)} 
-      33%{transform:translateY(-30px) rotate(120deg)} 
-      66%{transform:translateY(15px) rotate(240deg)} 
-      100%{transform:translateY(0) rotate(360deg)} 
+
+    /* Optimisations pour Safari iOS */
+    @media screen and (-webkit-min-device-pixel-ratio: 2) {
+      input {
+        -webkit-text-size-adjust: 100%;
+      }
     }
   </style>
 
-  <!-- Supabase JS (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <div class="floating-elements">
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
-  </div>
   <div class="background-pattern"></div>
 
   <div class="container">
-    <!-- Indicateur de connexion -->
     <div class="connection-status" id="connectionStatus">
       🔄 Connecting...
     </div>
@@ -348,247 +408,221 @@
       </div>
 
       <h1 class="brand-name">PartyGo</h1>
-      <h2>Discover the best bars & parties around you</h2>
-      <p class="subtitle">Earn points, climb the ranks, and become a legend!<br/>Join the waitlist NOW!</p>
+      <h2 class="tagline">Find the hottest parties around you</h2>
+      <p class="subtitle">
+        Join thousands already on the list.<br/>
+        Get priority access when we launch!
+      </p>
 
       <form class="form-container" id="waitlistForm">
         <div class="input-group">
-          <input type="text" placeholder="Your name" required id="name" autocomplete="name" minlength="2">
+          <input 
+            type="text" 
+            placeholder="Your name" 
+            required 
+            id="name" 
+            autocomplete="name" 
+            minlength="2"
+          >
         </div>
         <div class="input-group">
-          <input type="email" placeholder="Your email" required id="email" autocomplete="email">
+          <input 
+            type="email" 
+            placeholder="Your email" 
+            required 
+            id="email" 
+            autocomplete="email"
+          >
         </div>
-        <button type="submit" class="submit-btn" id="submitBtn">Join the waitlist</button>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <div class="loading-spinner" id="loadingSpinner"></div>
+          <span id="buttonText">Join the Waitlist</span>
+        </button>
 
-        <div class="success-message" id="successMessage">
-          🎉 Welcome to the PartyGo community! We'll be in touch soon with your priority access!
+        <div class="message success-message" id="successMessage">
+          🎉 You're in! We'll notify you when PartyGo launches.
         </div>
 
-        <!-- Message d'erreur ajouté -->
-        <div class="error-message" id="errorMessage">
-          ❌ Something went wrong. Please try again.
+        <div class="message error-message" id="errorMessage">
+          Something went wrong. Please try again.
         </div>
       </form>
 
       <div class="features">
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
           </svg>
-          <span class="feature-text">Priority access</span>
+          <span class="feature-text">Priority Access</span>
         </div>
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <span class="feature-text">Member exclusives</span>
+          <span class="feature-text">Exclusive Events</span>
         </div>
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
           </svg>
-          <span class="feature-text">Rewards</span>
+          <span class="feature-text">VIP Rewards</span>
         </div>
       </div>
 
       <div class="social-proof">
         <div class="counter" id="counter">1,247</div>
-        <div class="counter-label">Already signed up</div>
+        <div class="counter-label">People waiting</div>
       </div>
     </div>
   </div>
 
-  <!-- Script de la page -->
   <script>
-    // 🔧 CONFIGURATION SUPABASE - REMPLACEZ CES VALEURS
-    const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co/";            // ⚠️ Remplacez par votre URL
-    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5Y2VyeGN6eW5lYmphdGRoeWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4ODI1NTAsImV4cCI6MjA3MjQ1ODU1MH0.KrEdzR5UnuRw2zj95hJDn4BfeiaYHS3O--ZcYOPQL58";      // ⚠️ Remplacez par votre clé anon
+    // Configuration Supabase
+    const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5Y2VyeGN6eW5lYmphdGRoeWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4ODI1NTAsImV4cCI6MjA3MjQ1ODU1MH0.KrEdzR5UnuRw2zj95hJDn4BfeiaYHS3O--ZcYOPQL58";
 
     let supabaseClient;
     let isConnected = false;
 
-    // Fonctions utilitaires
     function updateConnectionStatus(online) {
       const status = document.getElementById('connectionStatus');
-      if (online) {
-        status.textContent = '🟢 Connected';
-        status.className = 'connection-status online';
-        isConnected = true;
-      } else {
-        status.textContent = '🔴 Offline';
-        status.className = 'connection-status offline';
-        isConnected = false;
-      }
+      status.textContent = online ? '🟢 Online' : '🔴 Offline';
+      status.className = `connection-status ${online ? 'online' : 'offline'}`;
+      isConnected = online;
     }
 
-    function showMessage(elementId, customText = null) {
-      // Cacher tous les messages
-      document.getElementById('successMessage').style.display = 'none';
-      document.getElementById('errorMessage').style.display = 'none';
+    function showMessage(type, customText = null) {
+      ['successMessage', 'errorMessage'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
       
-      // Afficher le message demandé
-      const element = document.getElementById(elementId);
-      if (customText) {
-        element.textContent = customText;
-      }
+      const element = document.getElementById(`${type}Message`);
+      if (customText) element.textContent = customText;
       element.style.display = 'block';
       
-      // Auto-hide après 4 secondes
-      setTimeout(() => {
-        element.style.display = 'none';
-      }, 4000);
+      setTimeout(() => element.style.display = 'none', 4000);
+    }
+
+    function setButtonLoading(loading) {
+      const btn = document.getElementById('submitBtn');
+      const spinner = document.getElementById('loadingSpinner');
+      const text = document.getElementById('buttonText');
+      
+      btn.disabled = loading;
+      spinner.style.display = loading ? 'inline-block' : 'none';
+      text.textContent = loading ? 'Joining...' : 'Join the Waitlist';
     }
 
     function isValidEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    function resetButton(submitBtn, originalText) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-      submitBtn.style.background = 'linear-gradient(135deg, #ff6b9d, #ffa726)';
+    function animateCounter(target = 1247) {
+      const counter = document.getElementById('counter');
+      let current = 0;
+      const increment = target / 80;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        counter.textContent = Math.floor(current).toLocaleString();
+      }, 25);
     }
 
-    // Initialisation au chargement de la page
-    window.addEventListener('load', async () => {
-      // Vérifier si la configuration est renseignée
-      if (SUPABASE_URL.includes('YOUR_PROJECT_ID')) {
-        updateConnectionStatus(false);
-        showMessage('errorMessage', '⚠️ Please configure SUPABASE_URL and SUPABASE_ANON in the code');
-        return;
-      }
-
+    async function init() {
       try {
-        // Initialiser Supabase
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
         
-        // Test de connexion
         const { error } = await supabaseClient
           .from('waitlist')
           .select('id')
           .limit(1);
 
-        if (error) {
-          console.error('Supabase connection error:', error);
-          updateConnectionStatus(false);
-          if (error.message.includes('relation') && error.message.includes('does not exist')) {
-            showMessage('errorMessage', '⚠️ Table "waitlist" not found. Please create it first.');
-          }
-        } else {
-          updateConnectionStatus(true);
+        updateConnectionStatus(!error);
+        if (error && error.message.includes('relation') && error.message.includes('does not exist')) {
+          showMessage('error', '⚠️ Database not configured yet');
         }
-
-        // Animation du compteur (votre code original)
-        const counter = document.getElementById('counter');
-        let n = 0, target = 1247;
-        const timer = setInterval(() => {
-          n += Math.ceil(target/60);
-          if(n >= target){ 
-            n = target; 
-            clearInterval(timer); 
-          }
-          counter.textContent = n.toLocaleString('fr-FR');
-        }, 30);
-
+        
+        animateCounter();
+        
       } catch (err) {
-        console.error('Initialization error:', err);
+        console.error('Init error:', err);
         updateConnectionStatus(false);
-        showMessage('errorMessage', '❌ Failed to initialize. Check console for details.');
       }
-    });
+    }
 
-    // Gestion du formulaire (votre code original amélioré)
     document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const submitBtn = document.getElementById('submitBtn');
-      const successMessage = document.getElementById('successMessage');
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
 
-      // Validation côté client
+      // Reset visual errors
+      nameInput.classList.remove('error');
+      emailInput.classList.remove('error');
+
+      // Validation
+      let hasError = false;
       if (!name || name.length < 2) {
-        showMessage('errorMessage', '❌ Please enter a valid name (at least 2 characters)');
-        return;
+        nameInput.classList.add('error');
+        hasError = true;
+      }
+      if (!email || !isValidEmail(email)) {
+        emailInput.classList.add('error');
+        hasError = true;
       }
 
-      if (!email || !isValidEmail(email)) {
-        showMessage('errorMessage', '❌ Please enter a valid email address');
+      if (hasError) {
+        showMessage('error', '❌ Please fill in all fields correctly');
         return;
       }
 
       if (!isConnected) {
-        showMessage('errorMessage', '❌ No connection to database. Please try again later.');
+        showMessage('error', '❌ No connection. Please try again.');
         return;
       }
 
-      // État envoi (votre code original)
-      submitBtn.disabled = true;
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Inscription en cours...';
-      submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      setButtonLoading(true);
 
       try {
-        // INSERT en base (votre code original)
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
           .from('waitlist')
-          .insert([{ name, email }]);
+          .insert([{ name, email }])
+          .select();
 
-        if (!error) {
-          // Succès (votre code original)
-          successMessage.style.display = 'block';
-          e.target.reset();
-
-          // Remettre le bouton + cacher le message après 3s (votre code original)
-          setTimeout(() => {
-            successMessage.style.display = 'none';
-            resetButton(submitBtn, originalText);
-          }, 3000);
-
-          // Compteur visuel (votre code original)
+        if (!error && data) {
+          showMessage('success');
+          document.getElementById('waitlistForm').reset();
+          
           const counter = document.getElementById('counter');
-          const cur = parseInt(counter.textContent.replace(/[^\d]/g,'')) || 1247;
-          counter.textContent = (cur + 1).toLocaleString('fr-FR');
-
+          const currentCount = parseInt(counter.textContent.replace(/[^\d]/g, '')) || 1247;
+          counter.textContent = (currentCount + 1).toLocaleString();
+          
         } else {
-          // Gestion d'erreurs améliorée
-          console.error('Insert error:', error);
-          
-          if (error.code === '23505' || error.message.includes('duplicate')) {
-            showMessage('errorMessage', '⚠️ This email is already registered!');
-          } else if (error.message.includes('policy')) {
-            showMessage('errorMessage', '❌ Access denied. Please check database permissions.');
+          if (error?.code === '23505') {
+            showMessage('error', '⚠️ Email already registered!');
           } else {
-            showMessage('errorMessage', '❌ Registration failed. Please try again.');
+            showMessage('error', '❌ Registration failed. Try again.');
           }
-          
-          resetButton(submitBtn, originalText);
         }
-
       } catch (err) {
-        console.error('Submission error:', err);
-        showMessage('errorMessage', '❌ Network error. Please check your connection.');
-        resetButton(submitBtn, originalText);
+        showMessage('error', '❌ Network error. Check connection.');
+      } finally {
+        setButtonLoading(false);
       }
     });
 
-    // Gestion des erreurs globales
-    window.addEventListener('error', (e) => {
-      console.error('Global JavaScript error:', e.error);
-    });
+    // Prevent zoom on iOS when focusing inputs
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      document.addEventListener('touchstart', function() {}, true);
+    }
 
-    // Test de connectivité périodique (nouveau)
-    setInterval(async () => {
-      if (!supabaseClient) return;
-      
-      try {
-        await supabaseClient.from('waitlist').select('id').limit(1);
-        if (!isConnected) updateConnectionStatus(true);
-      } catch {
-        if (isConnected) updateConnectionStatus(false);
-      }
-    }, 30000); // Vérification toutes les 30 secondes
+    window.addEventListener('load', init);
   </script>
 </body>
 </html>
