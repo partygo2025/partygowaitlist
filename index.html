@@ -322,47 +322,22 @@
 
     /* Responsive pour tablettes */
     @media (min-width: 768px) {
-      .container {
-        padding: 2rem;
-      }
-      
-      .card {
-        padding: 3rem 2.5rem;
-        max-width: 480px;
-      }
-      
-      .brand-name {
-        font-size: 3rem;
-      }
-      
-      .tagline {
-        font-size: 1.4rem;
-      }
-      
+      .container { padding: 2rem; }
+      .card { padding: 3rem 2.5rem; max-width: 480px; }
+      .brand-name { font-size: 3rem; }
+      .tagline { font-size: 1.4rem; }
       .features {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
       }
-      
-      .feature {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.25rem 1rem;
-      }
-      
-      .connection-status {
-        top: 2rem;
-        right: 2rem;
-      }
+      .feature { flex-direction: column; text-align: center; padding: 1.25rem 1rem; }
+      .connection-status { top: 2rem; right: 2rem; }
     }
 
     /* Desktop */
     @media (min-width: 1024px) {
-      .card {
-        max-width: 520px;
-        padding: 3.5rem 3rem;
-      }
+      .card { max-width: 520px; padding: 3.5rem 3rem; }
     }
 
     /* Support pour les encoches iPhone */
@@ -376,12 +351,12 @@
 
     /* Optimisations pour Safari iOS */
     @media screen and (-webkit-min-device-pixel-ratio: 2) {
-      input {
-        -webkit-text-size-adjust: 100%;
-      }
+      input { -webkit-text-size-adjust: 100%; }
     }
   </style>
 
+  <!-- ✅ AJOUTER : Script EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -469,19 +444,30 @@
       </div>
 
       <div class="social-proof">
-        <div class="counter" id="counter">1,247</div>
+        <div class="counter" id="counter">100</div>
         <div class="counter-label">People waiting</div>
       </div>
     </div>
   </div>
 
   <script>
+    // ✅ CONFIGURATION : Remplacez par VOS vraies clés EmailJS
+    const EMAILJS_CONFIG = {
+      publicKey: "WxKAjU-VzsvjhehBq",        // Ex: user_xyz789 - À récupérer dans Account → General
+      serviceId: "service_od2k298",         // ✅ Vous avez déjà cette clé
+      templateId: "template_nft12e8"       // Ex: template_abc456 - À récupérer après création du template
+    };
+
     // Configuration Supabase
     const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co";
     const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5Y2VyeGN6eW5lYmphdGRoeWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4ODI1NTAsImV4cCI6MjA3MjQ1ODU1MH0.KrEdzR5UnuRw2zj95hJDn4BfeiaYHS3O--ZcYOPQL58";
 
     let supabaseClient;
     let isConnected = false;
+    let currentCount = 100;
+
+    // ✅ Initialiser EmailJS
+    emailjs.init(EMAILJS_CONFIG.publicKey);
 
     function updateConnectionStatus(online) {
       const status = document.getElementById('connectionStatus');
@@ -516,10 +502,10 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    function animateCounter(target = 1247) {
+    function animateCounter(target) {
       const counter = document.getElementById('counter');
-      let current = 0;
-      const increment = target / 80;
+      let current = Math.max(100, currentCount);
+      const increment = Math.max(1, (target - current) / 60);
       
       const timer = setInterval(() => {
         current += increment;
@@ -528,11 +514,74 @@
           clearInterval(timer);
         }
         counter.textContent = Math.floor(current).toLocaleString();
-      }, 25);
+        currentCount = Math.floor(current);
+      }, 20);
+    }
+
+    function incrementCounter() {
+      currentCount++;
+      const counter = document.getElementById('counter');
+      
+      counter.style.transform = 'scale(1.1)';
+      counter.style.transition = 'transform 0.2s ease';
+      
+      setTimeout(() => {
+        counter.textContent = currentCount.toLocaleString();
+        counter.style.transform = 'scale(1)';
+      }, 100);
+
+      localStorage.setItem('partygo-counter', currentCount.toString());
+    }
+
+    function loadSavedCounter() {
+      const saved = localStorage.getItem('partygo-counter');
+      if (saved) {
+        currentCount = Math.max(100, parseInt(saved));
+      }
+      return currentCount;
+    }
+
+    async function loadStats() {
+      try {
+        const { count } = await supabaseClient
+          .from('waitlist')
+          .select('*', { count: 'exact', head: true });
+        
+        return (count || 0) + 100;
+      } catch (error) {
+        console.warn('Could not load stats from Supabase:', error);
+        return currentCount;
+      }
+    }
+
+    // ✅ FONCTION EMAILJS : Envoyer l'email de bienvenue
+    async function sendWelcomeEmail(name, email) {
+      try {
+        console.log(`Sending welcome email to ${name} (${email})`);
+        
+        const response = await emailjs.send(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG.templateId,
+          {
+            to_name: name,
+            to_email: email,
+            from_name: "PartyGo Team"
+          }
+        );
+        
+        console.log('Email sent successfully:', response);
+        return { success: true };
+        
+      } catch (error) {
+        console.error('EmailJS failed:', error);
+        return { success: false, error };
+      }
     }
 
     async function init() {
       try {
+        const savedCount = loadSavedCounter();
+        
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
         
         const { error } = await supabaseClient
@@ -541,15 +590,20 @@
           .limit(1);
 
         updateConnectionStatus(!error);
+        
         if (error && error.message.includes('relation') && error.message.includes('does not exist')) {
           showMessage('error', '⚠️ Database not configured yet');
+          animateCounter(savedCount);
+        } else {
+          const realCount = await loadStats();
+          const finalCount = Math.max(savedCount, realCount);
+          animateCounter(finalCount);
         }
-        
-        animateCounter();
         
       } catch (err) {
         console.error('Init error:', err);
         updateConnectionStatus(false);
+        animateCounter(loadSavedCounter());
       }
     }
 
@@ -561,11 +615,9 @@
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
 
-      // Reset visual errors
       nameInput.classList.remove('error');
       emailInput.classList.remove('error');
 
-      // Validation
       let hasError = false;
       if (!name || name.length < 2) {
         nameInput.classList.add('error');
@@ -589,6 +641,7 @@
       setButtonLoading(true);
 
       try {
+        // Insérer dans Supabase
         const { data, error } = await supabaseClient
           .from('waitlist')
           .insert([{ name, email }])
@@ -597,10 +650,15 @@
         if (!error && data) {
           showMessage('success');
           document.getElementById('waitlistForm').reset();
-          
-          const counter = document.getElementById('counter');
-          const currentCount = parseInt(counter.textContent.replace(/[^\d]/g, '')) || 1247;
-          counter.textContent = (currentCount + 1).toLocaleString();
+
+          // ✅ ENVOYER L'EMAIL DE BIENVENUE
+          try {
+            await sendWelcomeEmail(name, email);
+          } catch (emailError) {
+            console.warn('Email sending failed:', emailError);
+          }
+
+          incrementCounter();
           
         } else {
           if (error?.code === '23505') {
@@ -616,7 +674,21 @@
       }
     });
 
-    // Prevent zoom on iOS when focusing inputs
+    setInterval(async () => {
+      if (isConnected) {
+        try {
+          const realCount = await loadStats();
+          if (realCount > currentCount) {
+            currentCount = realCount;
+            document.getElementById('counter').textContent = currentCount.toLocaleString();
+            localStorage.setItem('partygo-counter', currentCount.toString());
+          }
+        } catch (error) {
+          console.warn('Failed to sync stats:', error);
+        }
+      }
+    }, 60000);
+
     if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
       document.addEventListener('touchstart', function() {}, true);
     }
