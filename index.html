@@ -38,14 +38,17 @@
       top: 0; left: 0; right: 0; bottom: 0;
       background: 
         radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 40% 60%, rgba(255,255,255,0.08) 0%, transparent 30%),
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, transparent 35%);
       animation: float 25s ease-in-out infinite;
       pointer-events: none;
     }
     
     @keyframes float { 
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-10px) scale(1.02); }
+      0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+      33% { transform: translateY(-8px) scale(1.01) rotate(1deg); }
+      66% { transform: translateY(5px) scale(0.99) rotate(-0.5deg); }
     }
 
     .card {
@@ -87,8 +90,14 @@
       margin: 0 auto 1.5rem;
       box-shadow: 0 8px 32px rgba(255,107,157,0.25);
       overflow: hidden;
+      padding: 2px;
     }
-    .logo svg { width: 60px; height: 60px; }
+    .logo img { 
+      width: 64px; 
+      height: 64px; 
+      object-fit: contain;
+      display: block;
+    }
 
     .brand-name { 
       background: linear-gradient(135deg, #ff6b9d, #ffa726);
@@ -355,8 +364,7 @@
     }
   </style>
 
-  <!-- ✅ AJOUTER : Script EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -369,17 +377,7 @@
 
     <div class="card">
       <div class="logo">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#ff6b9d"/>
-              <stop offset="100%" style="stop-color:#ffa726"/>
-            </linearGradient>
-          </defs>
-          <path d="M50 10 C35 10 25 20 25 35 C25 50 50 80 50 80 C50 80 75 50 75 35 C75 20 65 10 50 10 Z" fill="url(#logoGradient)"/>
-          <circle cx="50" cy="35" r="15" fill="white"/>
-          <path d="M50 25 L52.5 32 L60 32 L54.5 37 L57 44 L50 39 L43 44 L45.5 37 L40 32 L47.5 32 Z" fill="url(#logoGradient)"/>
-        </svg>
+        <img src="https://uycerxczynebjatdhyef.supabase.co/storage/v1/object/public/assets/LoDi-Stylized_map_pin_with_a_star_on_top__integrating_location_and_festive_celebration__vector_icon_design__simple_and_recognizable._the_main_and_brand_color_is_purple_so_keep_this_type_and_change_the.png" alt="PartyGo Logo" />
       </div>
 
       <h1 class="brand-name">PartyGo</h1>
@@ -451,13 +449,6 @@
   </div>
 
   <script>
-    // ✅ CONFIGURATION : Remplacez par VOS vraies clés EmailJS
-    const EMAILJS_CONFIG = {
-      publicKey: "WxKAjU-VzsvjhehBq",        // Ex: user_xyz789 - À récupérer dans Account → General
-      serviceId: "service_od2k298",         // ✅ Vous avez déjà cette clé
-      templateId: "template_nft12e8"       // Ex: template_abc456 - À récupérer après création du template
-    };
-
     // Configuration Supabase
     const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co";
     const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5Y2VyeGN6eW5lYmphdGRoeWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4ODI1NTAsImV4cCI6MjA3MjQ1ODU1MH0.KrEdzR5UnuRw2zj95hJDn4BfeiaYHS3O--ZcYOPQL58";
@@ -465,9 +456,6 @@
     let supabaseClient;
     let isConnected = false;
     let currentCount = 100;
-
-    // ✅ Initialiser EmailJS
-    emailjs.init(EMAILJS_CONFIG.publicKey);
 
     function updateConnectionStatus(online) {
       const status = document.getElementById('connectionStatus');
@@ -554,26 +542,34 @@
       }
     }
 
-    // ✅ FONCTION EMAILJS : Envoyer l'email de bienvenue
-    async function sendWelcomeEmail(name, email) {
+    // FONCTION: Envoyer email via Supabase Edge Function + Resend
+    async function sendWelcomeEmailResend(name, email) {
       try {
-        console.log(`Sending welcome email to ${name} (${email})`);
+        console.log(`Sending welcome email via Resend to ${name} (${email})`);
         
-        const response = await emailjs.send(
-          EMAILJS_CONFIG.serviceId,
-          EMAILJS_CONFIG.templateId,
-          {
-            to_name: name,
-            to_email: email,
-            from_name: "PartyGo Team"
-          }
-        );
-        
-        console.log('Email sent successfully:', response);
-        return { success: true };
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/send-welcome-email`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SUPABASE_ANON}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Email sent successfully via Resend:', result);
+          return { success: true };
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to send email');
+        }
         
       } catch (error) {
-        console.error('EmailJS failed:', error);
+        console.error('Resend failed:', error);
         return { success: false, error };
       }
     }
@@ -651,9 +647,9 @@
           showMessage('success');
           document.getElementById('waitlistForm').reset();
 
-          // ✅ ENVOYER L'EMAIL DE BIENVENUE
+          // ENVOYER L'EMAIL DE BIENVENUE VIA RESEND
           try {
-            await sendWelcomeEmail(name, email);
+            await sendWelcomeEmailResend(name, email);
           } catch (emailError) {
             console.warn('Email sending failed:', emailError);
           }
