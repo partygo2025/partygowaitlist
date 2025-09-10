@@ -182,37 +182,44 @@
     <p class="subtitle">Choose your language / Choisissez votre langue</p>
     
     <div class="language-options">
-      <a href="index.html?lang=en" class="language-btn" onclick="setLanguage('en')">
+      <button class="language-btn" onclick="selectLanguage('en')">
         <span class="flag">🇺🇸</span>
         <div class="language-text">
           <div>English</div>
           <div class="language-native">English</div>
         </div>
-      </a>
+      </button>
       
-      <a href="index.html?lang=fr" class="language-btn" onclick="setLanguage('fr')">
+      <button class="language-btn" onclick="selectLanguage('fr')">
         <span class="flag">🇫🇷</span>
         <div class="language-text">
           <div>Français</div>
           <div class="language-native">French</div>
         </div>
-      </a>
+      </button>
     </div>
   </div>
 
   <script>
-    function setLanguage(lang) {
+    function selectLanguage(lang) {
+      // Sauvegarder le choix
       localStorage.setItem('partygo-language', lang);
-      // Les liens href gèrent déjà la redirection
+      
+      // Rediriger vers la page de formulaire
+      window.location.href = `signup.html?lang=${lang}`;
     }
 
-    // Redirection automatique si langue déjà choisie
+    // Optionnel : redirection automatique si langue déjà choisie
+    // Décommentez cette section si vous voulez que les utilisateurs 
+    // soient automatiquement redirigés sans revoir la sélection
+    /*
     window.addEventListener('load', () => {
       const savedLang = localStorage.getItem('partygo-language');
       if (savedLang) {
-        window.location.href = `index.html?lang=${savedLang}`;
+        window.location.href = `signup.html?lang=${savedLang}`;
       }
     });
+    */
   </script>
 </body>
 </html>
