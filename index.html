@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
@@ -79,6 +79,36 @@
       }
     }
 
+    .language-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 20;
+    }
+
+    .language-switcher button {
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .language-switcher button.active {
+      background: #ff6b9d;
+    }
+
+    .language-switcher button:hover {
+      background: rgba(255, 107, 157, 0.1);
+    }
+
     .logo { 
       width: 80px;
       height: 80px;
@@ -137,7 +167,7 @@
       position: relative;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 1rem 1.25rem;
       font-size: 1.05rem;
@@ -150,7 +180,15 @@
       appearance: none;
     }
 
-    input:focus {
+    select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 1rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 3rem;
+    }
+
+    input:focus, select:focus {
       border-color: #ff6b9d;
       box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
       transform: translateY(-1px);
@@ -162,9 +200,42 @@
       font-weight: 400;
     }
 
-    input.error {
+    input.error, select.error {
       border-color: #e53e3e;
       box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      transform: none;
+      min-width: 18px;
+      height: 18px;
+      margin-top: 2px;
+    }
+
+    .checkbox-container label {
+      color: #4a5568;
+      cursor: pointer;
+    }
+
+    .checkbox-container a {
+      color: #ff6b9d;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .checkbox-container a:hover {
+      text-decoration: underline;
     }
 
     .submit-btn {
@@ -291,7 +362,7 @@
     .connection-status {
       position: fixed;
       top: env(safe-area-inset-top, 1rem);
-      right: 1rem;
+      left: 1rem;
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-size: 0.75rem;
@@ -312,7 +383,6 @@
       border: 1px solid rgba(245, 101, 101, 0.3);
     }
 
-    /* Loading spinner */
     .loading-spinner {
       display: none;
       width: 20px;
@@ -329,6 +399,44 @@
       100% { transform: rotate(360deg); }
     }
 
+    .success-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .success-content {
+      background: white;
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 400px;
+      animation: successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes successPop {
+      from { opacity: 0; transform: scale(0.8) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #48bb78, #38a169);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 2rem;
+    }
+
     /* Responsive pour tablettes */
     @media (min-width: 768px) {
       .container { padding: 2rem; }
@@ -341,7 +449,8 @@
         gap: 1rem;
       }
       .feature { flex-direction: column; text-align: center; padding: 1.25rem 1rem; }
-      .connection-status { top: 2rem; right: 2rem; }
+      .connection-status { top: 2rem; left: 2rem; }
+      .language-switcher { top: 2rem; right: 2rem; }
     }
 
     /* Desktop */
@@ -375,16 +484,19 @@
       🔄 Connecting...
     </div>
 
+    <div class="language-switcher">
+      <button onclick="switchLanguage('en')" id="btn-en">🇺🇸</button>
+      <button onclick="switchLanguage('fr')" id="btn-fr">🇫🇷</button>
+    </div>
+
     <div class="card">
       <div class="logo">
         <img src="https://uycerxczynebjatdhyef.supabase.co/storage/v1/object/public/assets/LoDi-Stylized_map_pin_with_a_star_on_top__integrating_location_and_festive_celebration__vector_icon_design__simple_and_recognizable._the_main_and_brand_color_is_purple_so_keep_this_type_and_change_the.png" alt="PartyGo Logo" />
       </div>
 
       <h1 class="brand-name">PartyGo</h1>
-      <h2 class="tagline">Discover the best bars and parties around you.</h2>
-      <p class="subtitle">
-        Earn points, climb ranks, and become a legend!
-      </p>
+      <h2 class="tagline" data-en="Discover the best bars and parties around you." data-fr="Découvrez les meilleurs bars et soirées près de chez vous."></h2>
+      <p class="subtitle" data-en="Earn points, climb ranks, and become a legend!" data-fr="Gagnez des points, grimpez dans le classement et devenez une légende !"></p>
 
       <form class="form-container" id="waitlistForm">
         <div class="input-group">
@@ -395,6 +507,8 @@
             id="name" 
             autocomplete="name" 
             minlength="2"
+            data-en-placeholder="Your name"
+            data-fr-placeholder="Votre nom"
           >
         </div>
         <div class="input-group">
@@ -404,19 +518,49 @@
             required 
             id="email" 
             autocomplete="email"
+            data-en-placeholder="Your email"
+            data-fr-placeholder="Votre email"
           >
         </div>
+        <div class="input-group">
+          <select id="source" required>
+            <option value="" data-en="How did you hear about us?" data-fr="Comment avez-vous entendu parler de nous ?"></option>
+            <option value="instagram" data-en="Instagram" data-fr="Instagram"></option>
+            <option value="facebook" data-en="Facebook" data-fr="Facebook"></option>
+            <option value="tiktok" data-en="TikTok" data-fr="TikTok"></option>
+            <option value="twitter" data-en="Twitter/X" data-fr="Twitter/X"></option>
+            <option value="linkedin" data-en="LinkedIn" data-fr="LinkedIn"></option>
+            <option value="word_of_mouth" data-en="Word of mouth" data-fr="Bouche-à-oreille"></option>
+            <option value="google_search" data-en="Google search" data-fr="Recherche Google"></option>
+            <option value="friend_referral" data-en="Friend referral" data-fr="Recommandation d'un ami"></option>
+            <option value="event" data-en="Event/Conference" data-fr="Événement/Conférence"></option>
+            <option value="blog_article" data-en="Blog/Article" data-fr="Blog/Article"></option>
+            <option value="youtube" data-en="YouTube" data-fr="YouTube"></option>
+            <option value="podcast" data-en="Podcast" data-fr="Podcast"></option>
+            <option value="other" data-en="Other" data-fr="Autre"></option>
+          </select>
+        </div>
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="consent" required>
+          <label for="consent">
+            <span data-en="I agree to the " data-fr="J'accepte la "></span>
+            <a href="#" onclick="showPrivacyPolicy()" data-en="Privacy Policy" data-fr="Politique de Confidentialité"></a>
+            <span data-en=" and consent to receive emails about PartyGo updates." data-fr=" et consens à recevoir des emails concernant les actualités de PartyGo."></span>
+          </label>
+        </div>
+
         <button type="submit" class="submit-btn" id="submitBtn">
           <div class="loading-spinner" id="loadingSpinner"></div>
-          <span id="buttonText">Join the Waitlist</span>
+          <span id="buttonText" data-en="Join the Waitlist" data-fr="Rejoindre la Liste d'Attente"></span>
         </button>
 
         <div class="message success-message" id="successMessage">
-          🎉 You're in! Welcome to the PartyGo's journey
+          <span data-en="🎉 You're in! Welcome to the PartyGo's journey" data-fr="🎉 Vous êtes inscrit ! Bienvenue dans l'aventure PartyGo"></span>
         </div>
 
         <div class="message error-message" id="errorMessage">
-          Something went wrong. Please try again.
+          <span data-en="Something went wrong. Please try again." data-fr="Une erreur s'est produite. Veuillez réessayer."></span>
         </div>
       </form>
 
@@ -425,41 +569,107 @@
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
           </svg>
-          <span class="feature-text">Priority Access</span>
+          <span class="feature-text" data-en="Priority Access" data-fr="Accès Prioritaire"></span>
         </div>
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <span class="feature-text">Extra points</span>
+          <span class="feature-text" data-en="Extra points" data-fr="Points bonus"></span>
         </div>
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
           </svg>
-          <span class="feature-text">Rewards</span>
+          <span class="feature-text" data-en="Rewards" data-fr="Récompenses"></span>
         </div>
       </div>
 
       <div class="social-proof">
         <div class="counter" id="counter">100</div>
-        <div class="counter-label">People waiting</div>
+        <div class="counter-label" data-en="People waiting" data-fr="Personnes en attente"></div>
       </div>
     </div>
   </div>
 
+  <!-- Success Overlay -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-content">
+      <div class="success-icon">✓</div>
+      <h2 style="color: #2d3748; margin-bottom: 1rem; font-size: 1.5rem;" data-en="Welcome aboard!" data-fr="Bienvenue à bord !"></h2>
+      <p style="color: #4a5568; margin-bottom: 1.5rem; line-height: 1.5;" data-en="Check your email for a welcome message from the PartyGo team. We're excited to have you!" data-fr="Vérifiez votre email pour un message de bienvenue de l'équipe PartyGo. Nous sommes ravis de vous avoir avec nous !"></p>
+      <button onclick="closeSuccessOverlay()" style="background: linear-gradient(135deg, #ff6b9d, #ffa726); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer;" data-en="Continue" data-fr="Continuer"></button>
+    </div>
+  </div>
+
   <script>
-    // Configuration Supabase
+    // Configuration
     const SUPABASE_URL = "https://uycerxczynebjatdhyef.supabase.co";
     const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5Y2VyeGN6eW5lYmphdGRoeWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4ODI1NTAsImV4cCI6MjA3MjQ1ODU1MH0.KrEdzR5UnuRw2zj95hJDn4BfeiaYHS3O--ZcYOPQL58";
 
     let supabaseClient;
     let isConnected = false;
     let currentCount = 100;
+    let currentLanguage = 'en';
+
+    // Traductions
+    const translations = {
+      connecting: { en: '🔄 Connecting...', fr: '🔄 Connexion...' },
+      online: { en: '🟢 Online', fr: '🟢 En ligne' },
+      offline: { en: '🔴 Offline', fr: '🔴 Hors ligne' },
+      joining: { en: 'Joining...', fr: 'Inscription...' },
+      errorFields: { en: '❌ Please fill in all fields correctly', fr: '❌ Veuillez remplir tous les champs correctement' },
+      errorConnection: { en: '❌ No connection. Please try again.', fr: '❌ Pas de connexion. Veuillez réessayer.' },
+      errorEmail: { en: 'Please enter a valid email address', fr: 'Veuillez entrer une adresse email valide' },
+      errorAlreadyRegistered: { en: '⚠️ Email already registered!', fr: '⚠️ Email déjà enregistré !' },
+      errorRegistration: { en: '❌ Registration failed. Try again.', fr: '❌ Inscription échouée. Réessayez.' },
+      errorNetwork: { en: '❌ Network error. Check connection.', fr: '❌ Erreur réseau. Vérifiez la connexion.' }
+    };
+
+    function updateLanguage(lang) {
+      currentLanguage = lang;
+      document.documentElement.lang = lang;
+      localStorage.setItem('partygo-language', lang);
+      
+      // Update active language button
+      document.querySelectorAll('.language-switcher button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.getElementById(`btn-${lang}`).classList.add('active');
+      
+      // Update all translatable elements
+      document.querySelectorAll(`[data-${lang}]`).forEach(element => {
+        const text = element.getAttribute(`data-${lang}`);
+        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+          element.placeholder = text;
+        } else if (element.tagName === 'OPTION') {
+          element.textContent = text;
+        } else {
+          element.textContent = text;
+        }
+      });
+
+      // Update connection status
+      updateConnectionStatus(isConnected);
+    }
+
+    function switchLanguage(lang) {
+      updateLanguage(lang);
+    }
+
+    function detectLanguage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLang = urlParams.get('lang');
+      const savedLang = localStorage.getItem('partygo-language');
+      const browserLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
+      
+      return urlLang || savedLang || browserLang;
+    }
 
     function updateConnectionStatus(online) {
       const status = document.getElementById('connectionStatus');
-      status.textContent = online ? '🟢 Online' : '🔴 Offline';
+      const text = online ? translations.online[currentLanguage] : translations.offline[currentLanguage];
+      status.textContent = text;
       status.className = `connection-status ${online ? 'online' : 'offline'}`;
       isConnected = online;
     }
@@ -470,7 +680,9 @@
       });
       
       const element = document.getElementById(`${type}Message`);
-      if (customText) element.textContent = customText;
+      if (customText) {
+        element.querySelector('span').textContent = customText;
+      }
       element.style.display = 'block';
       
       setTimeout(() => element.style.display = 'none', 4000);
@@ -483,21 +695,22 @@
       
       btn.disabled = loading;
       spinner.style.display = loading ? 'inline-block' : 'none';
-      text.textContent = loading ? 'Joining...' : 'Join the Waitlist';
+      
+      if (loading) {
+        text.textContent = translations.joining[currentLanguage];
+      } else {
+        text.textContent = text.getAttribute(`data-${currentLanguage}`);
+      }
     }
 
-    // VALIDATION D'EMAIL RENFORCÉE
     function isValidEmail(email) {
-      // Regex plus stricte
       const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
       
       if (!emailRegex.test(email)) return false;
       
-      // Vérifications supplémentaires
       const domain = email.split('@')[1]?.toLowerCase();
       const localPart = email.split('@')[0]?.toLowerCase();
       
-      // Domaines jetables courants à bloquer
       const disposableDomains = [
         '10minutemail.com', 'tempmail.org', 'guerrillamail.com', 
         'mailinator.com', 'temp-mail.org', 'throwaway.email',
@@ -505,16 +718,11 @@
         'mohmal.com', 'sharklasers.com', 'grr.la'
       ];
       
-      // Patterns suspects
       const suspiciousPatterns = [
-        /^test/i,
-        /^fake/i,
-        /^example/i,
-        /\d{8,}/, // 8+ chiffres consécutifs
-        /^[a-z]{15,}$/i // 15+ lettres consécutives sans chiffres/caractères
+        /^test/i, /^fake/i, /^example/i,
+        /\d{8,}/, /^[a-z]{15,}$/i
       ];
       
-      // Domaines suspects
       const suspiciousDomains = [
         'test.com', 'fake.com', 'example.com', 'test.fr', 'fake.fr'
       ];
@@ -522,17 +730,12 @@
       if (disposableDomains.includes(domain)) return false;
       if (suspiciousDomains.includes(domain)) return false;
       if (suspiciousPatterns.some(pattern => pattern.test(localPart))) return false;
-      
-      // Le domaine doit avoir au moins un point
       if (!domain || !domain.includes('.')) return false;
-      
-      // Longueurs raisonnables
       if (localPart.length > 64 || domain.length > 253) return false;
       
       return true;
     }
 
-    // Validation en temps réel
     function validateEmailRealTime(email) {
       const input = document.getElementById('email');
       
@@ -542,12 +745,44 @@
       }
       
       if (!isValidEmail(email)) {
-        input.setCustomValidity('Please enter a valid email address');
+        input.setCustomValidity(translations.errorEmail[currentLanguage]);
         return false;
       }
       
       input.setCustomValidity('');
       return true;
+    }
+
+    function showPrivacyPolicy() {
+      const privacyText = currentLanguage === 'fr' ? 
+        `Politique de Confidentialité PartyGo
+
+Nous collectons votre nom et email uniquement pour vous informer du lancement de PartyGo.
+
+Vos données sont stockées de manière sécurisée et ne seront jamais vendues à des tiers.
+
+Vous pouvez vous désinscrire à tout moment en nous contactant à hello@partygo.app.
+
+Conformément au RGPD, vous avez le droit d'accéder, modifier ou supprimer vos données.` :
+        `PartyGo Privacy Policy
+
+We collect your name and email only to notify you about PartyGo's launch.
+
+Your data is stored securely and will never be sold to third parties.
+
+You can unsubscribe at any time by contacting us at hello@partygo.app.
+
+In accordance with GDPR, you have the right to access, modify or delete your data.`;
+      
+      alert(privacyText);
+    }
+
+    function showSuccessOverlay() {
+      document.getElementById('successOverlay').style.display = 'flex';
+    }
+
+    function closeSuccessOverlay() {
+      document.getElementById('successOverlay').style.display = 'none';
     }
 
     function animateCounter(target) {
@@ -602,8 +837,7 @@
       }
     }
 
-    // FONCTION: Envoyer email via Supabase Edge Function + Resend
-    async function sendWelcomeEmailResend(name, email) {
+    async function sendWelcomeEmailResend(name, email, source) {
       try {
         console.log(`Sending welcome email via Resend to ${name} (${email})`);
         
@@ -615,7 +849,9 @@
           },
           body: JSON.stringify({
             name: name,
-            email: email
+            email: email,
+            source: source,
+            language: currentLanguage
           })
         });
 
@@ -635,6 +871,10 @@
     }
 
     async function init() {
+      // Initialize language
+      const detectedLang = detectLanguage();
+      updateLanguage(detectedLang);
+      
       try {
         const savedCount = loadSavedCounter();
         
@@ -662,7 +902,7 @@
         animateCounter(loadSavedCounter());
       }
 
-      // Event listeners pour validation en temps réel
+      // Event listeners for real-time validation
       document.getElementById('email').addEventListener('input', (e) => {
         validateEmailRealTime(e.target.value);
       });
@@ -670,7 +910,7 @@
       document.getElementById('email').addEventListener('blur', (e) => {
         const email = e.target.value.trim();
         if (email && !isValidEmail(email)) {
-          showMessage('error', 'Please enter a valid email address');
+          showMessage('error', translations.errorEmail[currentLanguage]);
         }
       });
     }
@@ -680,68 +920,96 @@
 
       const nameInput = document.getElementById('name');
       const emailInput = document.getElementById('email');
+      const sourceInput = document.getElementById('source');
+      const consentInput = document.getElementById('consent');
+      
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
+      const source = sourceInput.value;
+      const consent = consentInput.checked;
 
-      nameInput.classList.remove('error');
-      emailInput.classList.remove('error');
+      // Reset error states
+      [nameInput, emailInput, sourceInput].forEach(input => {
+        input.classList.remove('error');
+      });
 
       let hasError = false;
+      
       if (!name || name.length < 2) {
         nameInput.classList.add('error');
         hasError = true;
       }
+      
       if (!email || !isValidEmail(email)) {
         emailInput.classList.add('error');
         hasError = true;
       }
+      
+      if (!source) {
+        sourceInput.classList.add('error');
+        hasError = true;
+      }
+      
+      if (!consent) {
+        showMessage('error', currentLanguage === 'fr' ? 
+          '❌ Vous devez accepter la politique de confidentialité' : 
+          '❌ You must accept the privacy policy');
+        return;
+      }
 
       if (hasError) {
-        showMessage('error', '❌ Please fill in all fields correctly');
+        showMessage('error', translations.errorFields[currentLanguage]);
         return;
       }
 
       if (!isConnected) {
-        showMessage('error', '❌ No connection. Please try again.');
+        showMessage('error', translations.errorConnection[currentLanguage]);
         return;
       }
 
       setButtonLoading(true);
 
       try {
-        // Insérer dans Supabase
+        // Insert into Supabase with source tracking
         const { data, error } = await supabaseClient
           .from('waitlist')
-          .insert([{ name, email }])
+          .insert([{ 
+            name, 
+            email, 
+            source, 
+            language: currentLanguage,
+            created_at: new Date().toISOString()
+          }])
           .select();
 
         if (!error && data) {
-          showMessage('success');
           document.getElementById('waitlistForm').reset();
 
-          // ENVOYER L'EMAIL DE BIENVENUE VIA RESEND
+          // Send welcome email
           try {
-            await sendWelcomeEmailResend(name, email);
+            await sendWelcomeEmailResend(name, email, source);
           } catch (emailError) {
             console.warn('Email sending failed:', emailError);
           }
 
           incrementCounter();
+          showSuccessOverlay();
           
         } else {
           if (error?.code === '23505') {
-            showMessage('error', '⚠️ Email already registered!');
+            showMessage('error', translations.errorAlreadyRegistered[currentLanguage]);
           } else {
-            showMessage('error', '❌ Registration failed. Try again.');
+            showMessage('error', translations.errorRegistration[currentLanguage]);
           }
         }
       } catch (err) {
-        showMessage('error', '❌ Network error. Check connection.');
+        showMessage('error', translations.errorNetwork[currentLanguage]);
       } finally {
         setButtonLoading(false);
       }
     });
 
+    // Sync counter periodically
     setInterval(async () => {
       if (isConnected) {
         try {
@@ -757,6 +1025,7 @@
       }
     }, 60000);
 
+    // iOS touch optimization
     if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
       document.addEventListener('touchstart', function() {}, true);
     }
