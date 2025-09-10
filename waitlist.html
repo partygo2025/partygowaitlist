@@ -212,30 +212,51 @@
       margin: 1.5rem 0;
       font-size: 0.9rem;
       line-height: 1.4;
+      padding: 1rem;
+      background: rgba(255, 107, 157, 0.05);
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-container.error {
+      border-color: #e53e3e;
+      background: rgba(229, 62, 62, 0.05);
     }
 
     .checkbox-container input[type="checkbox"] {
-      width: auto;
+      width: 20px;
+      height: 20px;
       margin: 0;
-      transform: none;
-      min-width: 18px;
-      height: 18px;
       margin-top: 2px;
+      cursor: pointer;
+      accent-color: #ff6b9d;
+      transform: scale(1.2);
     }
 
     .checkbox-container label {
-      color: #4a5568;
+      color: #2d3748;
       cursor: pointer;
+      font-weight: 500;
+      flex: 1;
     }
 
     .checkbox-container a {
       color: #ff6b9d;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
     }
 
     .checkbox-container a:hover {
-      text-decoration: underline;
+      border-bottom-color: #ff6b9d;
+    }
+
+    .required-asterisk {
+      color: #e53e3e;
+      font-weight: bold;
+      margin-left: 4px;
     }
 
     .submit-btn {
@@ -507,8 +528,6 @@
             id="name" 
             autocomplete="name" 
             minlength="2"
-            data-en-placeholder="Your name"
-            data-fr-placeholder="Votre nom"
           >
         </div>
         <div class="input-group">
@@ -518,49 +537,48 @@
             required 
             id="email" 
             autocomplete="email"
-            data-en-placeholder="Your email"
-            data-fr-placeholder="Votre email"
           >
         </div>
         <div class="input-group">
           <select id="source" required>
-            <option value="" data-en="How did you hear about us?" data-fr="Comment avez-vous entendu parler de nous ?"></option>
-            <option value="instagram" data-en="Instagram" data-fr="Instagram"></option>
-            <option value="facebook" data-en="Facebook" data-fr="Facebook"></option>
-            <option value="tiktok" data-en="TikTok" data-fr="TikTok"></option>
-            <option value="twitter" data-en="Twitter/X" data-fr="Twitter/X"></option>
-            <option value="linkedin" data-en="LinkedIn" data-fr="LinkedIn"></option>
-            <option value="word_of_mouth" data-en="Word of mouth" data-fr="Bouche-à-oreille"></option>
-            <option value="google_search" data-en="Google search" data-fr="Recherche Google"></option>
-            <option value="friend_referral" data-en="Friend referral" data-fr="Recommandation d'un ami"></option>
-            <option value="event" data-en="Event/Conference" data-fr="Événement/Conférence"></option>
-            <option value="blog_article" data-en="Blog/Article" data-fr="Blog/Article"></option>
-            <option value="youtube" data-en="YouTube" data-fr="YouTube"></option>
-            <option value="podcast" data-en="Podcast" data-fr="Podcast"></option>
-            <option value="other" data-en="Other" data-fr="Autre"></option>
+            <option value="">How did you hear about us?</option>
+            <option value="instagram" data-en="Instagram" data-fr="Instagram">Instagram</option>
+            <option value="facebook" data-en="Facebook" data-fr="Facebook">Facebook</option>
+            <option value="tiktok" data-en="TikTok" data-fr="TikTok">TikTok</option>
+            <option value="twitter" data-en="Twitter/X" data-fr="Twitter/X">Twitter/X</option>
+            <option value="linkedin" data-en="LinkedIn" data-fr="LinkedIn">LinkedIn</option>
+            <option value="word_of_mouth" data-en="Word of mouth" data-fr="Bouche-à-oreille">Word of mouth</option>
+            <option value="google_search" data-en="Google search" data-fr="Recherche Google">Google search</option>
+            <option value="friend_referral" data-en="Friend referral" data-fr="Recommandation d'un ami">Friend referral</option>
+            <option value="event" data-en="Event/Conference" data-fr="Événement/Conférence">Event/Conference</option>
+            <option value="blog_article" data-en="Blog/Article" data-fr="Blog/Article">Blog/Article</option>
+            <option value="youtube" data-en="YouTube" data-fr="YouTube">YouTube</option>
+            <option value="podcast" data-en="Podcast" data-fr="Podcast">Podcast</option>
+            <option value="other" data-en="Other" data-fr="Autre">Other</option>
           </select>
         </div>
 
-        <div class="checkbox-container">
+        <div class="checkbox-container" id="consentContainer">
           <input type="checkbox" id="consent" required>
           <label for="consent">
-            <span data-en="I agree to the " data-fr="J'accepte la "></span>
-            <a href="#" onclick="showPrivacyPolicy()" data-en="Privacy Policy" data-fr="Politique de Confidentialité"></a>
-            <span data-en=" and consent to receive emails about PartyGo updates." data-fr=" et consens à recevoir des emails concernant les actualités de PartyGo."></span>
+            <span data-en="I agree to the " data-fr="J'accepte la ">I agree to the </span>
+            <a href="#" onclick="showPrivacyPolicy()" data-en="Privacy Policy" data-fr="Politique de Confidentialité">Privacy Policy</a>
+            <span data-en=" and consent to receive emails about PartyGo updates" data-fr=" et consens à recevoir des emails concernant les actualités de PartyGo"> and consent to receive emails about PartyGo updates</span>
+            <span class="required-asterisk">*</span>
           </label>
         </div>
 
         <button type="submit" class="submit-btn" id="submitBtn">
           <div class="loading-spinner" id="loadingSpinner"></div>
-          <span id="buttonText" data-en="Join the Waitlist" data-fr="Rejoindre la Liste d'Attente"></span>
+          <span id="buttonText" data-en="Join the Waitlist" data-fr="Rejoindre la Liste d'Attente">Join the Waitlist</span>
         </button>
 
         <div class="message success-message" id="successMessage">
-          <span data-en="🎉 You're in! Welcome to the PartyGo's journey" data-fr="🎉 Vous êtes inscrit ! Bienvenue dans l'aventure PartyGo"></span>
+          <span data-en="🎉 You're in! Welcome to the PartyGo's journey" data-fr="🎉 Vous êtes inscrit ! Bienvenue dans l'aventure PartyGo">🎉 You're in! Welcome to the PartyGo's journey</span>
         </div>
 
         <div class="message error-message" id="errorMessage">
-          <span data-en="Something went wrong. Please try again." data-fr="Une erreur s'est produite. Veuillez réessayer."></span>
+          <span data-en="Something went wrong. Please try again." data-fr="Une erreur s'est produite. Veuillez réessayer.">Something went wrong. Please try again.</span>
         </div>
       </form>
 
@@ -569,25 +587,25 @@
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
           </svg>
-          <span class="feature-text" data-en="Priority Access" data-fr="Accès Prioritaire"></span>
+          <span class="feature-text" data-en="Priority Access" data-fr="Accès Prioritaire">Priority Access</span>
         </div>
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <span class="feature-text" data-en="Extra points" data-fr="Points bonus"></span>
+          <span class="feature-text" data-en="Extra points" data-fr="Points bonus">Extra points</span>
         </div>
         <div class="feature">
           <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
             <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
           </svg>
-          <span class="feature-text" data-en="Rewards" data-fr="Récompenses"></span>
+          <span class="feature-text" data-en="Rewards" data-fr="Récompenses">Rewards</span>
         </div>
       </div>
 
       <div class="social-proof">
         <div class="counter" id="counter">100</div>
-        <div class="counter-label" data-en="People waiting" data-fr="Personnes en attente"></div>
+        <div class="counter-label" data-en="People waiting" data-fr="Personnes en attente">People waiting</div>
       </div>
     </div>
   </div>
@@ -596,9 +614,9 @@
   <div class="success-overlay" id="successOverlay">
     <div class="success-content">
       <div class="success-icon">✓</div>
-      <h2 style="color: #2d3748; margin-bottom: 1rem; font-size: 1.5rem;" data-en="Welcome aboard!" data-fr="Bienvenue à bord !"></h2>
-      <p style="color: #4a5568; margin-bottom: 1.5rem; line-height: 1.5;" data-en="Check your email for a welcome message from the PartyGo team. We're excited to have you!" data-fr="Vérifiez votre email pour un message de bienvenue de l'équipe PartyGo. Nous sommes ravis de vous avoir avec nous !"></p>
-      <button onclick="closeSuccessOverlay()" style="background: linear-gradient(135deg, #ff6b9d, #ffa726); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer;" data-en="Continue" data-fr="Continuer"></button>
+      <h2 style="color: #2d3748; margin-bottom: 1rem; font-size: 1.5rem;" data-en="Welcome aboard!" data-fr="Bienvenue à bord !">Welcome aboard!</h2>
+      <p style="color: #4a5568; margin-bottom: 1.5rem; line-height: 1.5;" data-en="Check your email for a welcome message from the PartyGo team. We're excited to have you!" data-fr="Vérifiez votre email pour un message de bienvenue de l'équipe PartyGo. Nous sommes ravis de vous avoir avec nous !">Check your email for a welcome message from the PartyGo team. We're excited to have you!</p>
+      <button onclick="closeSuccessOverlay()" style="background: linear-gradient(135deg, #ff6b9d, #ffa726); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer;" data-en="Continue" data-fr="Continuer">Continue</button>
     </div>
   </div>
 
@@ -648,6 +666,29 @@
           element.textContent = text;
         }
       });
+
+      // Update input placeholders specifically
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      
+      if (lang === 'fr') {
+        if (nameInput) nameInput.placeholder = 'Votre nom';
+        if (emailInput) emailInput.placeholder = 'Votre email';
+      } else {
+        if (nameInput) nameInput.placeholder = 'Your name';
+        if (emailInput) emailInput.placeholder = 'Your email';
+      }
+
+      // Update select placeholder
+      const sourceSelect = document.getElementById('source');
+      if (sourceSelect) {
+        const firstOption = sourceSelect.querySelector('option[value=""]');
+        if (firstOption) {
+          firstOption.textContent = lang === 'fr' ? 
+            'Comment avez-vous entendu parler de nous ?' : 
+            'How did you hear about us?';
+        }
+      }
 
       // Update connection status
       updateConnectionStatus(isConnected);
