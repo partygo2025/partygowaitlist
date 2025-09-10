@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PartyGo - Choose Language</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #ff6b9d 0%, #ffa726 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .background-pattern {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 40% 60%, rgba(255,255,255,0.08) 0%, transparent 30%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      max-width: 420px;
+      width: 90%;
+      position: relative;
+      z-index: 10;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      box-shadow: 0 8px 32px rgba(255,107,157,0.25);
+    }
+
+    .logo img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      background: linear-gradient(135deg, #ff6b9d, #ffa726);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      color: #4a5568;
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+    }
+
+    .language-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      color: #2d3748;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .language-btn:hover {
+      border-color: #ff6b9d;
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 157, 0.15);
+    }
+
+    .language-btn:active {
+      transform: translateY(0);
+    }
+
+    .flag {
+      font-size: 1.8rem;
+    }
+
+    .language-text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .language-native {
+      font-size: 0.95rem;
+      color: #718096;
+      margin-top: 2px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 3.5rem 3rem;
+        max-width: 480px;
+      }
+      .brand-name {
+        font-size: 3rem;
+      }
+      .language-options {
+        flex-direction: row;
+        gap: 1.5rem;
+      }
+      .language-btn {
+        flex-direction: column;
+        flex: 1;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+      .language-text {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+  
+  <div class="container">
+    <div class="logo">
+      <img src="https://uycerxczynebjatdhyef.supabase.co/storage/v1/object/public/assets/LoDi-Stylized_map_pin_with_a_star_on_top__integrating_location_and_festive_celebration__vector_icon_design__simple_and_recognizable._the_main_and_brand_color_is_purple_so_keep_this_type_and_change_the.png" alt="PartyGo Logo" />
+    </div>
+    
+    <h1 class="brand-name">PartyGo</h1>
+    <p class="subtitle">Choose your language / Choisissez votre langue</p>
+    
+    <div class="language-options">
+      <a href="index.html?lang=en" class="language-btn" onclick="setLanguage('en')">
+        <span class="flag">🇺🇸</span>
+        <div class="language-text">
+          <div>English</div>
+          <div class="language-native">English</div>
+        </div>
+      </a>
+      
+      <a href="index.html?lang=fr" class="language-btn" onclick="setLanguage('fr')">
+        <span class="flag">🇫🇷</span>
+        <div class="language-text">
+          <div>Français</div>
+          <div class="language-native">French</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function setLanguage(lang) {
+      localStorage.setItem('partygo-language', lang);
+      // Les liens href gèrent déjà la redirection
+    }
+
+    // Redirection automatique si langue déjà choisie
+    window.addEventListener('load', () => {
+      const savedLang = localStorage.getItem('partygo-language');
+      if (savedLang) {
+        window.location.href = `index.html?lang=${savedLang}`;
+      }
+    });
+  </script>
+</body>
+</html>
