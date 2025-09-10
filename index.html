@@ -922,6 +922,7 @@ In accordance with GDPR, you have the right to access, modify or delete your dat
       const emailInput = document.getElementById('email');
       const sourceInput = document.getElementById('source');
       const consentInput = document.getElementById('consent');
+      const consentContainer = document.getElementById('consentContainer');
       
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
@@ -932,33 +933,49 @@ In accordance with GDPR, you have the right to access, modify or delete your dat
       [nameInput, emailInput, sourceInput].forEach(input => {
         input.classList.remove('error');
       });
+      consentContainer.classList.remove('error');
 
       let hasError = false;
+      let firstErrorField = null;
       
       if (!name || name.length < 2) {
         nameInput.classList.add('error');
         hasError = true;
+        if (!firstErrorField) firstErrorField = nameInput;
       }
       
       if (!email || !isValidEmail(email)) {
         emailInput.classList.add('error');
         hasError = true;
+        if (!firstErrorField) firstErrorField = emailInput;
       }
       
       if (!source) {
         sourceInput.classList.add('error');
         hasError = true;
+        if (!firstErrorField) firstErrorField = sourceInput;
       }
       
       if (!consent) {
+        consentContainer.classList.add('error');
+        hasError = true;
+        if (!firstErrorField) firstErrorField = consentInput;
+        
         showMessage('error', currentLanguage === 'fr' ? 
-          '❌ Vous devez accepter la politique de confidentialité' : 
-          '❌ You must accept the privacy policy');
+          '❌ Vous devez accepter la politique de confidentialité pour continuer' : 
+          '❌ You must accept the privacy policy to continue');
+        
+        // Scroll vers la checkbox si elle n'est pas visible
+        consentContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
       if (hasError) {
         showMessage('error', translations.errorFields[currentLanguage]);
+        // Focus sur le premier champ en erreur
+        if (firstErrorField) {
+          firstErrorField.focus();
+        }
         return;
       }
 
