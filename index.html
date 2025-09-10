@@ -486,8 +486,68 @@
       text.textContent = loading ? 'Joining...' : 'Join the Waitlist';
     }
 
+    // VALIDATION D'EMAIL RENFORCÉE
     function isValidEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      // Regex plus stricte
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      
+      if (!emailRegex.test(email)) return false;
+      
+      // Vérifications supplémentaires
+      const domain = email.split('@')[1]?.toLowerCase();
+      const localPart = email.split('@')[0]?.toLowerCase();
+      
+      // Domaines jetables courants à bloquer
+      const disposableDomains = [
+        '10minutemail.com', 'tempmail.org', 'guerrillamail.com', 
+        'mailinator.com', 'temp-mail.org', 'throwaway.email',
+        'yopmail.com', 'maildrop.cc', 'temp-mail.io',
+        'mohmal.com', 'sharklasers.com', 'grr.la'
+      ];
+      
+      // Patterns suspects
+      const suspiciousPatterns = [
+        /^test/i,
+        /^fake/i,
+        /^example/i,
+        /\d{8,}/, // 8+ chiffres consécutifs
+        /^[a-z]{15,}$/i // 15+ lettres consécutives sans chiffres/caractères
+      ];
+      
+      // Domaines suspects
+      const suspiciousDomains = [
+        'test.com', 'fake.com', 'example.com', 'test.fr', 'fake.fr'
+      ];
+      
+      if (disposableDomains.includes(domain)) return false;
+      if (suspiciousDomains.includes(domain)) return false;
+      if (suspiciousPatterns.some(pattern => pattern.test(localPart))) return false;
+      
+      // Le domaine doit avoir au moins un point
+      if (!domain || !domain.includes('.')) return false;
+      
+      // Longueurs raisonnables
+      if (localPart.length > 64 || domain.length > 253) return false;
+      
+      return true;
+    }
+
+    // Validation en temps réel
+    function validateEmailRealTime(email) {
+      const input = document.getElementById('email');
+      
+      if (!email) {
+        input.setCustomValidity('');
+        return true;
+      }
+      
+      if (!isValidEmail(email)) {
+        input.setCustomValidity('Please enter a valid email address');
+        return false;
+      }
+      
+      input.setCustomValidity('');
+      return true;
     }
 
     function animateCounter(target) {
@@ -601,6 +661,18 @@
         updateConnectionStatus(false);
         animateCounter(loadSavedCounter());
       }
+
+      // Event listeners pour validation en temps réel
+      document.getElementById('email').addEventListener('input', (e) => {
+        validateEmailRealTime(e.target.value);
+      });
+
+      document.getElementById('email').addEventListener('blur', (e) => {
+        const email = e.target.value.trim();
+        if (email && !isValidEmail(email)) {
+          showMessage('error', 'Please enter a valid email address');
+        }
+      });
     }
 
     document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
