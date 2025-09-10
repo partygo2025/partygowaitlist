@@ -206,20 +206,10 @@
       localStorage.setItem('partygo-language', lang);
       
       // Rediriger vers la page de formulaire
-      window.location.href = `signup.html?lang=${lang}`;
+      window.location.href = `waitlist.html?lang=${lang}`;
     }
 
-    // Optionnel : redirection automatique si langue déjà choisie
-    // Décommentez cette section si vous voulez que les utilisateurs 
-    // soient automatiquement redirigés sans revoir la sélection
-    /*
-    window.addEventListener('load', () => {
-      const savedLang = localStorage.getItem('partygo-language');
-      if (savedLang) {
-        window.location.href = `signup.html?lang=${savedLang}`;
-      }
-    });
-    */
+    // PAS de redirection automatique - on veut toujours montrer cette page
   </script>
 </body>
 </html>
